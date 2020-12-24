@@ -1,0 +1,14 @@
+node_modules
+logError.json
+yarn-error.log
+uploads
+static
+private
+temp
+.vscode
+dist
+logs
+
+.env
+.env.production.local
+.env.development.local

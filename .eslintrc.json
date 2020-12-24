@@ -1,0 +1,14 @@
+{
+  "extends": ["airbnb-typescript/base", "prettier"],
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["eslint-plugin-import", "prettier"],
+  "rules": {
+    "implicit-arrow-linebreak": "off"
+  }
+}
