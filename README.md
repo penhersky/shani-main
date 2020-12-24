@@ -1,4 +1,4 @@
-# Account service
+# Main service
 
 ##### Back-end
 
@@ -7,4 +7,7 @@
 - TypeScript
 - Node.js
 - Apollo GraphQL
-- Sequelize(mysql)
+- Mongoose
+
+[Borsch](https://github.com/penhersky/shani-borsch)
+[Account](https://github.com/penhersky/shami-account-back)
