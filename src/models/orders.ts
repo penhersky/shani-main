@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 export interface OrderType extends mongoose.Document {
   name: string;
   description: string;
+  price: string;
   customer?: mongoose.Types.ObjectId;
   performer?: mongoose.Types.ObjectId;
   status?: string;
@@ -26,6 +27,11 @@ const Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    price: {
+      type: String,
+      required: false,
+      default: 'contractual',
+    },
     customer: {
       type: mongoose.Types.ObjectId,
       ref: 'User',
@@ -41,6 +47,18 @@ const Schema = new mongoose.Schema(
       enum: ['created', 'in processing', 'done', 'closed', 'excellent'],
       required: false,
       default: 'created',
+    },
+    time: {
+      type: String,
+      required: false,
+    },
+    from: {
+      type: String,
+      required: false,
+    },
+    to: {
+      type: String,
+      required: false,
     },
     locationType: {
       type: String,
@@ -80,6 +98,7 @@ const Schema = new mongoose.Schema(
 Schema.index({
   name: 'text',
   description: 'text',
+  price: 'text',
   location: {
     name: 'text',
   },
