@@ -6,7 +6,7 @@ export interface CategoryType extends mongoose.Document {
   image?: string;
   description?: string;
   parent?: string;
-  hidden?: boolean;
+  visible?: boolean;
 }
 
 const Schema = new mongoose.Schema(
@@ -32,10 +32,10 @@ const Schema = new mongoose.Schema(
       required: false,
       default: 'none',
     },
-    hidden: {
+    visible: {
       type: Boolean,
       required: false,
-      default: true,
+      default: false,
     },
   },
   {

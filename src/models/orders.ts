@@ -1,0 +1,96 @@
+import mongoose from 'mongoose';
+
+export interface OrderType extends mongoose.Document {
+  name: string;
+  description: string;
+  customer?: mongoose.Types.ObjectId;
+  performer?: mongoose.Types.ObjectId;
+  status?: string;
+  locationType?: string;
+  location?: {
+    name: string;
+    lat: string;
+    lng: string;
+  };
+  categories: mongoose.Types.ObjectId[];
+  visible?: boolean;
+}
+
+const Schema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    customer: {
+      type: mongoose.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    performer: {
+      type: mongoose.Types.ObjectId,
+      ref: 'User',
+      required: false,
+    },
+    status: {
+      type: String,
+      enum: ['created', 'in processing', 'done', 'closed', 'excellent'],
+      required: false,
+      default: 'created',
+    },
+    locationType: {
+      type: String,
+      enum: ['none', 'at home', 'online', 'other'],
+      required: true,
+    },
+    location: {
+      required: false,
+      default: {},
+      name: {
+        type: String,
+      },
+      lat: {
+        type: String,
+      },
+      lng: {
+        type: String,
+      },
+    },
+    categories: {
+      type: [mongoose.Types.ObjectId],
+      required: false,
+      ref: 'Category',
+      default: [],
+    },
+    visible: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
+
+Schema.index({
+  name: 'text',
+  description: 'text',
+  location: {
+    name: 'text',
+  },
+});
+
+interface Order<T extends mongoose.Document>
+  extends mongoose.PaginateModel<T> {}
+
+const Model: Order<OrderType> = mongoose.model<OrderType>(
+  'Order',
+  Schema,
+) as Order<OrderType>;
+
+export default Model;
