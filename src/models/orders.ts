@@ -7,6 +7,9 @@ export interface OrderType extends mongoose.Document {
   customer?: mongoose.Types.ObjectId;
   performer?: mongoose.Types.ObjectId;
   status?: string;
+  time?: string;
+  from?: string;
+  to?: string;
   locationType?: string;
   location?: {
     name: string;
