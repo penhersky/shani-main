@@ -10,7 +10,6 @@ import { PORT, DB_STR_URL } from './config';
 import { logInfo } from './lib/logger';
 
 const app = express();
-
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 300,

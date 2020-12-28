@@ -32,10 +32,13 @@ Schema.plugin(mongoosePaginate);
 
 interface User<T extends mongoose.Document> extends mongoose.PaginateModel<T> {}
 
+/**
+ * This scheme can be changed only from another service.
+ * @readonly
+ */
 const Model: User<UserType> = mongoose.model<UserType>(
   'User',
   Schema,
 ) as User<UserType>;
 
-// @read-only
 export default Model;
