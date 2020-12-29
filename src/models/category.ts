@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import { tables } from '../lib/constants';
+
 export interface CategoryType extends mongoose.Document {
   name: string;
   icon?: string;
@@ -43,4 +45,4 @@ const Schema = new mongoose.Schema(
   },
 );
 
-export default mongoose.model('Category', Schema);
+export default mongoose.model(tables.category, Schema);

@@ -2,10 +2,12 @@ import mongoose from 'mongoose';
 
 import { tables } from '../lib/constants';
 
-export interface CommentType extends mongoose.Document {
+export interface RequestType extends mongoose.Document {
   user: mongoose.Types.ObjectId;
   order: mongoose.Types.ObjectId;
   text: string;
+  price: string;
+  time: string;
   visible?: boolean;
 }
 
@@ -14,6 +16,15 @@ const Schema = new mongoose.Schema(
     text: {
       type: String,
       required: true,
+    },
+    time: {
+      type: String,
+      required: false,
+    },
+    price: {
+      type: String,
+      required: false,
+      default: 'contractual',
     },
     order: {
       type: mongoose.Types.ObjectId,
@@ -36,12 +47,12 @@ const Schema = new mongoose.Schema(
   },
 );
 
-interface Comment<T extends mongoose.Document>
+interface Request<T extends mongoose.Document>
   extends mongoose.PaginateModel<T> {}
 
-const Model: Comment<CommentType> = mongoose.model<CommentType>(
-  tables.comment,
+const Model: Request<RequestType> = mongoose.model<RequestType>(
+  tables.request,
   Schema,
-) as Comment<CommentType>;
+) as Request<RequestType>;
 
 export default Model;

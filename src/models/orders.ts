@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
+import { User } from '.';
 
+import { tables } from '../lib/constants';
 export interface OrderType extends mongoose.Document {
   name: string;
   description: string;
@@ -37,7 +39,7 @@ const Schema = new mongoose.Schema(
     },
     customer: {
       type: mongoose.Types.ObjectId,
-      ref: 'User',
+      ref: tables.user,
       required: true,
     },
     performer: {
@@ -84,7 +86,7 @@ const Schema = new mongoose.Schema(
     categories: {
       type: [mongoose.Types.ObjectId],
       required: false,
-      ref: 'Category',
+      ref: tables.category,
       default: [],
     },
     visible: {
@@ -111,7 +113,7 @@ interface Order<T extends mongoose.Document>
   extends mongoose.PaginateModel<T> {}
 
 const Model: Order<OrderType> = mongoose.model<OrderType>(
-  'Order',
+  tables.order,
   Schema,
 ) as Order<OrderType>;
 
