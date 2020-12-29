@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { User } from '.';
 
 import { tables } from '../lib/constants';
+
 export interface OrderType extends mongoose.Document {
   name: string;
   description: string;
@@ -67,7 +67,7 @@ const Schema = new mongoose.Schema(
     },
     locationType: {
       type: String,
-      enum: ['none', 'at home', 'online', 'other'],
+      enum: ['none', 'place', 'online', 'other'],
       required: true,
     },
     location: {
