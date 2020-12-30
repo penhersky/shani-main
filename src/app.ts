@@ -1,5 +1,7 @@
 import 'dotenv-flow/config';
+import http from 'http';
 import express from 'express';
+// import sockets, { Socket } from 'socket.io';
 import rateLimit from 'express-rate-limit';
 import { graphql } from 'body-parser-graphql';
 import { ApolloServer, makeExecutableSchema, gql } from 'apollo-server-express';
@@ -10,6 +12,9 @@ import { PORT, DB_STR_URL } from './config';
 import { logInfo } from './lib/logger';
 
 const app = express();
+const server = new http.Server(app);
+// const io = new sockets.Server(server, { cors: { origin: '*' } });
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 300,
@@ -27,7 +32,9 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    hello: () => 'The result was obtained successfully! Congratulations!',
+    hello: () => {
+      return 'The result was obtained successfully! Congratulations!';
+    },
   },
 };
 
@@ -37,17 +44,35 @@ const schema = makeExecutableSchema({
   resolverValidationOptions: { requireResolversForResolveType: false },
 });
 
-const server = new ApolloServer({
+const apolloServer = new ApolloServer({
   schema,
   context: ({ req, res }) => ({ req, res }),
 });
 
-server.applyMiddleware({ app, path: '/graphql' });
+apolloServer.applyMiddleware({ app, path: '/graphql' });
 
 database(String(DB_STR_URL));
 
-app.listen({ port: PORT }, () =>
+server.listen({ port: PORT }, () =>
   logInfo(
-    `🚀 Server ready at 🔗 http://localhost:${PORT}${server.graphqlPath}`,
+    `🚀 Server ready at 🔗 http://localhost:${PORT}${apolloServer.graphqlPath}`,
   ),
 );
+
+// temp
+// io.setMaxListeners(200);
+// io.use((socket, next) => {
+//   console.log('socket', socket);
+//   next();
+// });
+// io.on('connection', (socket: Socket) => {
+//   console.log('connected');
+//   socket.on('test', (data: any) => {
+//     console.log(data);
+//     console.log(socket);
+//     socket.send(`new message "${data.message}" `);
+//   });
+//   socket.on('disconnect', () => {
+//     console.log('user disconnected');
+//   });
+// });
