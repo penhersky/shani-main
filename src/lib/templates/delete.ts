@@ -1,5 +1,5 @@
 import cather from '../../wrappers/resolverCather';
-import auth from '../checkAuthAdmin';
+import auth from '../checkAuth';
 
 export const deleteMany = (Model: any, key: string) => async (
   _: any,
@@ -21,6 +21,8 @@ export const deleteMany = (Model: any, key: string) => async (
     },
     context,
     auth,
+    true,
+    true,
   );
 
 export const deleteOne = (Model: any, key: string) => async (
@@ -39,4 +41,6 @@ export const deleteOne = (Model: any, key: string) => async (
     },
     context,
     auth,
+    true,
+    true,
   );

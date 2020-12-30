@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 import { tables } from '../lib/constants';
 
@@ -45,4 +46,14 @@ const Schema = new mongoose.Schema(
   },
 );
 
-export default mongoose.model(tables.category, Schema);
+Schema.plugin(mongoosePaginate);
+
+interface Category<T extends mongoose.Document>
+  extends mongoose.PaginateModel<T> {}
+
+const Model: Category<CategoryType> = mongoose.model<CategoryType>(
+  tables.category,
+  Schema,
+) as Category<CategoryType>;
+
+export default Model;

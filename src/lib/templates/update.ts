@@ -1,5 +1,5 @@
 import cather from '../../wrappers/resolverCather';
-import auth from '../checkAuthAdmin';
+import auth from '../checkAuth';
 
 export default (Model: any, key: string) => async (
   _: any,
@@ -18,4 +18,6 @@ export default (Model: any, key: string) => async (
     },
     context,
     auth,
+    true,
+    true,
   );

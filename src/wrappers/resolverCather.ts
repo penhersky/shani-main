@@ -3,12 +3,13 @@ import { logError } from '../lib/logger';
 export default async (
   resolver: (user?: any) => any,
   context?: any,
-  auth?: (context: any) => object | string,
+  auth?: (context: any, isAdmin: boolean) => object | string,
   fullCheck = true,
+  isAdmin = false,
 ) => {
   try {
     if (auth) {
-      const authResult = auth(context);
+      const authResult = auth(context, isAdmin);
       if (typeof authResult === 'string') {
         if (fullCheck) throw new Error('Access denied');
         return await resolver(authResult);
@@ -17,7 +18,13 @@ export default async (
 
     return await resolver();
   } catch (error) {
-    logError(error.message, { error });
-    return error;
+    if (error.message === 'Access denied') return error.message;
+    logError(error.message, {
+      name: error?.name,
+      fileName: error?.fileName,
+      line: error?.lineNumber,
+      stack: error?.stack,
+    });
+    return 'Server error';
   }
 };

@@ -4,8 +4,10 @@ import express from 'express';
 // import sockets, { Socket } from 'socket.io';
 import rateLimit from 'express-rate-limit';
 import { graphql } from 'body-parser-graphql';
-import { ApolloServer, makeExecutableSchema, gql } from 'apollo-server-express';
+import { ApolloServer, makeExecutableSchema } from 'apollo-server-express';
 import cors from 'cors';
+
+import typeDefs from './typeDefs';
 
 import database from './database';
 import { PORT, DB_STR_URL } from './config';
@@ -24,18 +26,8 @@ app.use('*', cors());
 app.use(limiter);
 app.use(graphql());
 
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
 const resolvers = {
-  Query: {
-    hello: () => {
-      return 'The result was obtained successfully! Congratulations!';
-    },
-  },
+  Query: {},
 };
 
 const schema = makeExecutableSchema({

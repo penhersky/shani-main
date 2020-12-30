@@ -1,5 +1,5 @@
 import cather from '../../wrappers/resolverCather';
-import auth from '../checkAuthAdmin';
+import auth from '../checkAuth';
 
 export const getManyPaginated = (Model: any, key: string) => async (
   _: any,
@@ -28,6 +28,8 @@ export const getManyPaginated = (Model: any, key: string) => async (
     },
     context,
     auth,
+    true,
+    true,
   );
 
 export const getMany = (Model: any, key: string) => async (
@@ -47,7 +49,9 @@ export const getMany = (Model: any, key: string) => async (
     },
     context,
     auth,
+    true,
+    true,
   );
 
 export const getOne = (Model: any) => async (_: any, args: any, context: any) =>
-  cather(async () => Model.findById(args.id), context, auth);
+  cather(async () => Model.findById(args.id), context, auth, true, true);
