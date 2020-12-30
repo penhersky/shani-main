@@ -23,7 +23,7 @@ export const getManyPaginated = (Model: any, key: string) => async (
         page: list.page,
         limit: list.limit,
         totalPages: list.totalPages,
-        [`${key}s`]: list.docs,
+        [key]: list.docs,
       };
     },
     context,
@@ -44,7 +44,7 @@ export const getMany = (Model: any, key: string) => async (
       return {
         result: 'SUCCESS',
         totalItems: list.length,
-        [`${key}s`]: list,
+        [key]: list,
       };
     },
     context,

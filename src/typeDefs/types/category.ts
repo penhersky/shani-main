@@ -38,9 +38,8 @@ export default gql`
   }
 
   extend type Query {
-    getCategories: [Categories]!
-    getCategoriesByParentId(id: ID!): [Categories]!
-
+    getCategories: [Categories]! # -
+    getCategoriesByParentId(id: ID!): [Categories]! # -
     _getCategories(paginate: Paginate!): Categories!
     _getCategory(id: ID!): Category!
   }

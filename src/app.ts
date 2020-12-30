@@ -8,6 +8,7 @@ import { ApolloServer, makeExecutableSchema } from 'apollo-server-express';
 import cors from 'cors';
 
 import typeDefs from './typeDefs';
+import resolvers from './resolvers';
 
 import database from './database';
 import { PORT, DB_STR_URL } from './config';
@@ -25,10 +26,6 @@ const limiter = rateLimit({
 app.use('*', cors());
 app.use(limiter);
 app.use(graphql());
-
-const resolvers = {
-  Query: {},
-};
 
 const schema = makeExecutableSchema({
   typeDefs,

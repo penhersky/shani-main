@@ -18,13 +18,11 @@ export default async (
 
     return await resolver();
   } catch (error) {
-    if (error.message === 'Access denied') return error.message;
+    if (error.message === 'Access denied') return error;
     logError(error.message, {
       name: error?.name,
-      fileName: error?.fileName,
-      line: error?.lineNumber,
       stack: error?.stack,
     });
-    return 'Server error';
+    return Error('Server error');
   }
 };

@@ -16,7 +16,7 @@ export const deleteMany = (Model: any, key: string) => async (
 
       return {
         result: 'SUCCESS',
-        message: `${key}s deleted successful!`,
+        message: `${key} deleted successful!`,
       };
     },
     context,
