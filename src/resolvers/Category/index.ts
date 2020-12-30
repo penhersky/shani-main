@@ -1,8 +1,19 @@
 import { Category } from '../../models';
-import { getManyPaginated, getOne } from '../../lib/templates/get';
-import update from '../../lib/templates/update';
-import add from '../../lib/templates/add';
-import { deleteMany } from '../../lib/templates/delete';
+
+import {
+  getManyPaginated,
+  deleteMany,
+  getOne,
+  add,
+  update,
+} from '../../lib/templates';
+
+import CategoryType from './Category';
+import {
+  getCategories,
+  getCategoriesByParentId,
+  getMainCategories,
+} from './Query';
 
 export default {
   Mutation: {
@@ -11,7 +22,11 @@ export default {
     _updateCategory: update(Category, 'category'),
   },
   Query: {
+    getCategories,
+    getMainCategories,
+    getCategoriesByParentId,
     _getCategories: getManyPaginated(Category, 'categories'),
     _getCategory: getOne(Category),
   },
+  CategoryType,
 };

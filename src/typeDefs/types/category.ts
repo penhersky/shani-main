@@ -8,6 +8,7 @@ export default gql`
     image: String
     description: String
     parent: String
+    children: [Category]
     visible: Boolean
     createdAt: String
     updatedAt: String
@@ -38,8 +39,9 @@ export default gql`
   }
 
   extend type Query {
-    getCategories: [Categories]! # -
-    getCategoriesByParentId(id: ID!): [Categories]! # -
+    getCategories: [Categories]!
+    getCategoriesByParentId(id: ID!): [Categories]!
+    getMainCategories: [Categories]!
     _getCategories(paginate: Paginate!): Categories!
     _getCategory(id: ID!): Category!
   }

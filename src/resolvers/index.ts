@@ -7,4 +7,5 @@ export default {
   Mutation: {
     ...category.Mutation,
   },
+  Category: category.CategoryType,
 };
