@@ -7,6 +7,9 @@ export const PORT: number | undefined = Number(ENV.PORT);
 // database
 export const { DB_STR_URL } = ENV;
 
+// io
+export const { MAX_NOTIFICATION_LISTENERS } = ENV;
+
 // log lever
 export const { LOG_LEVEL } = ENV;
 

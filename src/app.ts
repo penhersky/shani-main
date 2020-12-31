@@ -1,7 +1,7 @@
 import 'dotenv-flow/config';
 import http from 'http';
 import express from 'express';
-// import sockets, { Socket } from 'socket.io';
+import sockets from 'socket.io';
 import rateLimit from 'express-rate-limit';
 import { graphql } from 'body-parser-graphql';
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-express';
@@ -10,13 +10,15 @@ import cors from 'cors';
 import typeDefs from './typeDefs';
 import resolvers from './resolvers';
 
+import connect, { middleware } from './io';
+
 import database from './database';
-import { PORT, DB_STR_URL } from './config';
+import { PORT, DB_STR_URL, MAX_NOTIFICATION_LISTENERS } from './config';
 import { logInfo } from './lib/logger';
 
 const app = express();
 const server = new http.Server(app);
-// const io = new sockets.Server(server, { cors: { origin: '*' } });
+const io = new sockets.Server(server, { cors: { origin: '*' } });
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -42,26 +44,12 @@ apolloServer.applyMiddleware({ app, path: '/graphql' });
 
 database(String(DB_STR_URL));
 
+io.setMaxListeners(Number(MAX_NOTIFICATION_LISTENERS));
+io.use(middleware);
+io.on('connection', connect);
+
 server.listen({ port: PORT }, () =>
   logInfo(
     `🚀 Server ready at 🔗 http://localhost:${PORT}${apolloServer.graphqlPath}`,
   ),
 );
-
-// temp
-// io.setMaxListeners(200);
-// io.use((socket, next) => {
-//   console.log('socket', socket);
-//   next();
-// });
-// io.on('connection', (socket: Socket) => {
-//   console.log('connected');
-//   socket.on('test', (data: any) => {
-//     console.log(data);
-//     console.log(socket);
-//     socket.send(`new message "${data.message}" `);
-//   });
-//   socket.on('disconnect', () => {
-//     console.log('user disconnected');
-//   });
-// });
