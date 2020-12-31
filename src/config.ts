@@ -6,6 +6,9 @@ export const PORT: number | undefined = Number(ENV.PORT);
 
 // database
 export const { DB_STR_URL } = ENV;
+export const { REDIS_HOST } = ENV;
+export const { REDIS_PORT } = ENV;
+export const { REDIS_DB } = ENV;
 
 // io
 export const { MAX_NOTIFICATION_LISTENERS } = ENV;

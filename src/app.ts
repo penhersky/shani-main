@@ -3,6 +3,7 @@ import http from 'http';
 import express from 'express';
 import sockets from 'socket.io';
 import rateLimit from 'express-rate-limit';
+import redis from 'redis';
 import { graphql } from 'body-parser-graphql';
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-express';
 import cors from 'cors';
@@ -13,12 +14,24 @@ import resolvers from './resolvers';
 import connect, { middleware } from './io';
 
 import database from './database';
-import { PORT, DB_STR_URL, MAX_NOTIFICATION_LISTENERS } from './config';
-import { logInfo } from './lib/logger';
+import {
+  PORT,
+  DB_STR_URL,
+  MAX_NOTIFICATION_LISTENERS,
+  REDIS_HOST,
+  REDIS_PORT,
+  REDIS_DB,
+} from './config';
+import { logInfo, logError } from './lib/logger';
 
 const app = express();
 const server = new http.Server(app);
 const io = new sockets.Server(server, { cors: { origin: '*' } });
+const client = redis.createClient({
+  db: REDIS_DB,
+  port: Number(REDIS_PORT),
+  host: String(REDIS_HOST),
+});
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -37,16 +50,19 @@ const schema = makeExecutableSchema({
 
 const apolloServer = new ApolloServer({
   schema,
-  context: ({ req, res }) => ({ req, res }),
+  context: ({ req, res }) => ({ req, res, io, storage: client }),
 });
 
 apolloServer.applyMiddleware({ app, path: '/graphql' });
 
 database(String(DB_STR_URL));
+client.on('error', (error) => {
+  logError(error);
+});
 
 io.setMaxListeners(Number(MAX_NOTIFICATION_LISTENERS));
-io.use(middleware);
-io.on('connection', connect);
+io.use((socket: any, next: any) => middleware(socket, next, client));
+io.on('connection', (socket: any) => connect(socket, client));
 
 server.listen({ port: PORT }, () =>
   logInfo(

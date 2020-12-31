@@ -2,7 +2,9 @@ import { Category } from '../../models';
 import cather from '../../wrappers/resolverCather';
 import auth from '../../lib/checkAuth';
 
-export const getCategories = (_: any, args: any, context: any) =>
+import { Context } from '../../types/resolver';
+
+export const getCategories = (_: any, args: any, context: Context) =>
   cather(async () => Category.find({}), context, auth);
 
 export const getCategoriesByParentId = async (
