@@ -45,6 +45,7 @@ export default gql`
 
   extend type Query {
     getRequestByOrder(id: ID!): Requests! # -
+    getMyRequest: Requests! # -
     _getRequests(paginate: Paginate!): Requests! # -
     _getRequest(id: ID!): Request! # -
   }

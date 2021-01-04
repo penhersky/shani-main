@@ -5,6 +5,21 @@ export default gql`
     id: ID!
     name: String!
     requests: Request! # -
+    description: string
+    price: String
+    categories: [Category]
+    customer: User!
+    performer: User
+    status: String
+    time: String
+    from: String
+    to: String
+    locationType: String
+    location: {
+      name: String
+      lat: String
+      lng: String
+    }
     visible: Boolean
     deleted: Boolean
     createdAt: String
@@ -12,9 +27,60 @@ export default gql`
   }
   input CreateOrder {
     name: String!
+    description: string
+    price: String
+    categories: [ID]
+    customer: ID!
+    status: String
+    time: String
+    from: String
+    to: String
+    locationType: String
+    location: {
+      name: String
+      lat: String
+      lng: String
+    }
+    visible: Boolean
+    deleted: Boolean
   }
   input UpdateOrder {
     name: String!
+    description: string
+    price: String
+    categories: [ID]
+    customer: ID!
+    performer: UD
+    status: String
+    time: String
+    from: String
+    to: String
+    locationType: String
+    location: {
+      name: String
+      lat: String
+      lng: String
+    }
+    visible: Boolean
+    deleted: Boolean
+  }
+  input OrderInput {
+    name: String!
+    description: string
+    price: String
+    categories: [ID]
+    customer: ID!
+    performer: UD
+    status: String
+    time: String
+    from: String
+    to: String
+    locationType: String
+    location: {
+      name: String
+      lat: String
+      lng: String
+    }
     visible: Boolean
   }
   type Orders {
@@ -23,11 +89,10 @@ export default gql`
     page: Int
     limit: Int
     totalPages: Int
-    orders: [Orders]
+    orders: [Order]
   }
 
   extend type Query {
-    getOrdersByCategory(id: ID!): ID!
     _getOrders(paginate: Paginate!): Orders! # -
     _getOrder(id: ID!): Order! # -
   }
