@@ -44,12 +44,12 @@ const Schema = new mongoose.Schema(
     },
     performer: {
       type: mongoose.Types.ObjectId,
-      ref: 'User',
+      ref: tables.user,
       required: false,
     },
     status: {
       type: String,
-      enum: ['created', 'in processing', 'done', 'closed', 'excellent'],
+      enum: ['created', 'in processing', 'done', 'closed', 'canceled'],
       required: false,
       default: 'created',
     },
