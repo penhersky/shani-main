@@ -2,6 +2,8 @@ import { Socket } from 'socket.io';
 import { RedisClient } from 'redis';
 
 export { default as middleware } from './middleware';
+export { default as events } from './events';
+export { sendMany, sendOne } from './wrappers';
 
 export default (socket: Socket, client: RedisClient) => {
   socket.on('message', (data: any) => {

@@ -5,4 +5,5 @@ export const tables = {
   category: 'Category',
   order: 'Order',
   request: 'Request',
+  image: 'OrderImage',
 };
