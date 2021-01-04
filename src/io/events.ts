@@ -2,6 +2,7 @@ export default {
   order: {
     NEW: 'new_order', // (only performers) ?many?
     NEW_PERFORMER: 'new_performer_request', // (customer)?one?
+    performer_request_canceled: 'performer_request_canceled', // (performer)?one?
     performer_confirmed: 'performer_confirmed', // (subscribers) ?many?
     refused_performer: 'refused_performer', // (customer and subscribers) ?many?
     in_processing: 'in_processing', // (customer)?one?

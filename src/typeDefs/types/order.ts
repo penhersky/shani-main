@@ -4,6 +4,7 @@ export default gql`
   type Order {
     id: ID!
     name: String!
+    requests: Request! # -
     visible: Boolean
     deleted: Boolean
     createdAt: String
@@ -26,12 +27,13 @@ export default gql`
   }
 
   extend type Query {
-    _getOrders(paginate: Paginate!): Orders!
-    _getOrder(id: ID!): Order!
+    getOrdersByCategory(id: ID!): ID!
+    _getOrders(paginate: Paginate!): Orders! # -
+    _getOrder(id: ID!): Order! # -
   }
   extend type Mutation {
-    _addOrder(id: ID!, order: CreateOrder!): Order!
-    _deleteOrders(idArr: [ID!]!): Result!
-    _updateOrder(id: ID!, order: UpdateOrder!): Category!
+    _addOrder(id: ID!, order: CreateOrder!): Order! # -
+    _deleteOrders(idArr: [ID!]!): Result! # -
+    _updateOrder(id: ID!, order: UpdateOrder!): Category! # -
   }
 `;

@@ -9,6 +9,7 @@ export interface RequestType extends mongoose.Document {
   price: string;
   time: string;
   visible?: boolean;
+  canceled?: boolean;
 }
 
 const Schema = new mongoose.Schema(
@@ -37,6 +38,11 @@ const Schema = new mongoose.Schema(
       required: true,
     },
     visible: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    canceled: {
       type: Boolean,
       required: false,
       default: false,
