@@ -6,6 +6,7 @@ export interface OrderType extends mongoose.Document {
   name: string;
   description: string;
   price: string;
+  categories: mongoose.Types.ObjectId[];
   customer?: mongoose.Types.ObjectId;
   performer?: mongoose.Types.ObjectId;
   status?: string;
@@ -18,8 +19,8 @@ export interface OrderType extends mongoose.Document {
     lat: string;
     lng: string;
   };
-  categories: mongoose.Types.ObjectId[];
   visible?: boolean;
+  deleted?: boolean;
 }
 
 const Schema = new mongoose.Schema(
@@ -90,6 +91,11 @@ const Schema = new mongoose.Schema(
       default: [],
     },
     visible: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    deleted: {
       type: Boolean,
       required: false,
       default: false,
