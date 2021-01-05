@@ -1,11 +1,23 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
+  type OrderLocation {
+    name: String
+    lat: String
+    lng: String
+  }
+
+  input inputOrderLocation {
+    name: String
+    lat: String
+    lng: String
+  }
+
   type Order {
     id: ID!
     name: String!
     requests: Request! # -
-    description: string
+    description: String
     price: String
     categories: [Category]
     customer: User!
@@ -15,11 +27,7 @@ export default gql`
     from: String
     to: String
     locationType: String
-    location: {
-      name: String
-      lat: String
-      lng: String
-    }
+    location: OrderLocation
     visible: Boolean
     deleted: Boolean
     createdAt: String
@@ -27,7 +35,7 @@ export default gql`
   }
   input CreateOrder {
     name: String!
-    description: string
+    description: String
     price: String
     categories: [ID]
     customer: ID!
@@ -36,51 +44,39 @@ export default gql`
     from: String
     to: String
     locationType: String
-    location: {
-      name: String
-      lat: String
-      lng: String
-    }
+    location: inputOrderLocation
     visible: Boolean
     deleted: Boolean
   }
   input UpdateOrder {
     name: String!
-    description: string
+    description: String
     price: String
     categories: [ID]
     customer: ID!
-    performer: UD
+    performer: ID
     status: String
     time: String
     from: String
     to: String
     locationType: String
-    location: {
-      name: String
-      lat: String
-      lng: String
-    }
+    location: inputOrderLocation
     visible: Boolean
     deleted: Boolean
   }
   input OrderInput {
     name: String!
-    description: string
+    description: String
     price: String
     categories: [ID]
     customer: ID!
-    performer: UD
+    performer: ID
     status: String
     time: String
     from: String
     to: String
     locationType: String
-    location: {
-      name: String
-      lat: String
-      lng: String
-    }
+    location: inputOrderLocation
     visible: Boolean
   }
   type Orders {
