@@ -16,11 +16,11 @@ export default gql`
   type Order {
     id: ID!
     name: String!
-    requests: Request! # -
     description: String
     price: String
     categories: [Category]
     comments: [Comment]
+    requests: [Request]! # -
     customer: User!
     performer: User
     status: String
