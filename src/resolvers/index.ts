@@ -1,4 +1,5 @@
 import category from './Category';
+import { UserType } from './User';
 
 export default {
   Query: {
@@ -8,4 +9,5 @@ export default {
     ...category.Mutation,
   },
   Category: category.CategoryType,
+  User: UserType,
 };

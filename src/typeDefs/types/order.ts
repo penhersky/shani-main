@@ -20,6 +20,7 @@ export default gql`
     description: String
     price: String
     categories: [Category]
+    comments: [Comment]
     customer: User!
     performer: User
     status: String

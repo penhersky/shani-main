@@ -8,6 +8,7 @@ export default gql`
     firstName: String
     lastName: String
     middleName: String
-    categoriesId: [String]
+    categories: [Category]
+    image: String
   }
 `;

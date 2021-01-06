@@ -1,6 +1,7 @@
 import { concatenateTypeDefs } from 'apollo-server-express';
 
 import category from './category';
+import comment from './comment';
 import request from './request';
 import user from './user';
 import order from './order';
@@ -17,4 +18,5 @@ export default concatenateTypeDefs([
   category,
   order,
   request,
+  comment,
 ]);
