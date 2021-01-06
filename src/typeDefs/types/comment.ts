@@ -3,8 +3,8 @@ import { gql } from 'apollo-server-express';
 export default gql`
   type Comment {
     id: ID!
-    user: User # -
-    order: Order # -
+    user: User
+    order: Order
     text: String
     visible: Boolean
     createdAt: String
