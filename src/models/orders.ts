@@ -95,11 +95,6 @@ const Schema = new mongoose.Schema(
       required: false,
       default: false,
     },
-    deleted: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
   },
   {
     timestamps: true,

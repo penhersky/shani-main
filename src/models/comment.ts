@@ -29,7 +29,7 @@ const Schema = new mongoose.Schema(
     visible: {
       type: Boolean,
       required: false,
-      default: false,
+      default: true,
     },
   },
   {
