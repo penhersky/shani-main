@@ -7,7 +7,7 @@ export interface OrderType extends mongoose.Document {
   description: string;
   price: string;
   categories: mongoose.Types.ObjectId[];
-  customer?: mongoose.Types.ObjectId;
+  customer: mongoose.Types.ObjectId;
   performer?: mongoose.Types.ObjectId;
   status?: string;
   time?: string;
@@ -19,7 +19,7 @@ export interface OrderType extends mongoose.Document {
     lat: string;
     lng: string;
   };
-  allowСomments: boolean;
+  allowComments: boolean;
   visible?: boolean;
   deleted?: boolean;
 }
@@ -91,7 +91,7 @@ const Schema = new mongoose.Schema(
       ref: tables.category,
       default: [],
     },
-    allowСomments: {
+    allowComments: {
       type: Boolean,
       required: false,
       default: true,

@@ -6,8 +6,8 @@ export interface RequestType extends mongoose.Document {
   user: mongoose.Types.ObjectId;
   order: mongoose.Types.ObjectId;
   text: string;
-  price: string;
-  time: string;
+  price?: string;
+  time?: string;
   visible?: boolean;
   canceled?: boolean;
 }
@@ -40,7 +40,7 @@ const Schema = new mongoose.Schema(
     visible: {
       type: Boolean,
       required: false,
-      default: false,
+      default: true,
     },
     canceled: {
       type: Boolean,

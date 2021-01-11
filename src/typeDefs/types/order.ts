@@ -20,7 +20,7 @@ export default gql`
     price: String
     categories: [Category]
     comments: [Comment]
-    requests: [Request]! # -
+    requests: [Request]!
     customer: User!
     performer: User
     status: String
@@ -30,6 +30,7 @@ export default gql`
     locationType: String
     location: OrderLocation
     visible: Boolean
+    allowComments: Boolean
     deleted: Boolean
     createdAt: String
     updatedAt: String
@@ -46,6 +47,7 @@ export default gql`
     to: String
     locationType: String
     location: inputOrderLocation
+    allowComments: Boolean
     visible: Boolean
     deleted: Boolean
   }
@@ -62,6 +64,7 @@ export default gql`
     to: String
     locationType: String
     location: inputOrderLocation
+    allowComments: Boolean
     visible: Boolean
     deleted: Boolean
   }
@@ -79,6 +82,7 @@ export default gql`
     locationType: String
     location: inputOrderLocation
     visible: Boolean
+    allowComments: Boolean
   }
   type Orders {
     result: result

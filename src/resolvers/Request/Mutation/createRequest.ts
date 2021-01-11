@@ -1,4 +1,4 @@
-import { Comment, Order } from '../../../models';
+import { Request, Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
 
@@ -7,34 +7,42 @@ import { sendOne } from '../../../io/wrappers';
 
 import { Context } from '../../../types/resolver';
 
-const addComment = async (_: any, { comment }: any, context: any) =>
+const creteRequest = async (
+  _: any,
+  { orderId, request }: any,
+  context: Context,
+) =>
   cather(
     async (user: any) => {
-      const order = await Order.findById(comment.orderId);
+      const order = await Order.findById(orderId);
       if (!order)
         return {
           status: 40,
           result: 'ERROR',
         };
-      if (!order.allowComments)
+
+      if (user.type !== 'performer')
         return {
           status: 401,
           result: 'ERROR',
         };
-      const newComment = await Comment.create({
+
+      const newRequest = await Request.create({
         user: user.id,
         order: order.id,
-        text: comment.text,
+        text: request.text,
+        price: request.price,
+        time: request.time,
       });
 
       sendOne(
         context.io,
         context.storage,
-        events.order.new_comment,
+        events.order.NEW_PERFORMER,
         String(order.customer),
         {
           order: { id: order.id, name: order.name },
-          comment: { id: newComment.id, text: newComment.text },
+          request: { id: newRequest.id, text: newRequest.text },
         },
       );
 
@@ -47,4 +55,4 @@ const addComment = async (_: any, { comment }: any, context: any) =>
     auth,
   );
 
-export default addComment;
+export default creteRequest;

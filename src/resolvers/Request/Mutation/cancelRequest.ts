@@ -1,4 +1,4 @@
-import { Comment, Order } from '../../../models';
+import { Request, Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
 
@@ -7,39 +7,38 @@ import { sendOne } from '../../../io/wrappers';
 
 import { Context } from '../../../types/resolver';
 
-const addComment = async (_: any, { comment }: any, context: any) =>
+const cancelRequest = async (_: any, { id }: any, context: Context) =>
   cather(
     async (user: any) => {
-      const order = await Order.findById(comment.orderId);
-      if (!order)
+      const request = await Request.findById(id);
+      if (!request)
         return {
-          status: 40,
           result: 'ERROR',
+          status: 44,
         };
-      if (!order.allowComments)
+      const order = await Order.findById(request.order);
+      if (!order || order.customer !== user.id)
         return {
           status: 401,
           result: 'ERROR',
         };
-      const newComment = await Comment.create({
-        user: user.id,
-        order: order.id,
-        text: comment.text,
+
+      await request.updateOne({
+        canceled: true,
       });
 
       sendOne(
         context.io,
         context.storage,
-        events.order.new_comment,
-        String(order.customer),
+        events.order.canceled_performer,
+        String(request.user),
         {
           order: { id: order.id, name: order.name },
-          comment: { id: newComment.id, text: newComment.text },
         },
       );
 
       return {
-        status: 20,
+        status: 21,
         result: 'SUCCESS',
       };
     },
@@ -47,4 +46,4 @@ const addComment = async (_: any, { comment }: any, context: any) =>
     auth,
   );
 
-export default addComment;
+export default cancelRequest;

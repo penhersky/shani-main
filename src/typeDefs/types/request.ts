@@ -24,8 +24,6 @@ export default gql`
     text: String!
     price: String
     time: String
-    visible: Boolean
-    canceled: Boolean
   }
   input UpdateRequest {
     text: String!
@@ -44,18 +42,18 @@ export default gql`
   }
 
   extend type Query {
-    getRequestByOrder(id: ID!): Requests! # -
-    getMyRequest: Requests! # -
-    _getRequests(paginate: Paginate!): Requests! # -
-    _getRequest(id: ID!): Request! # -
+    getRequestsByOrder(id: ID!): Requests!
+    getMyRequests: Requests!
+    _getRequests(paginate: Paginate!): Requests!
+    _getRequest(id: ID!): Request!
   }
   extend type Mutation {
-    createRequest(orderId: ID!, request: CreatePerformerRequest!): Request! # -
-    cancelRequest(id: ID!): Result! # - only customer
-    setVisibleRequest(id: ID!): Result! # - only owner
-    deleteRequest(id: ID!): Result! # - only owner
-    _addRequest(request: CreateRequest!): Request! # -
-    _deleteRequests(idArr: [ID!]!): Result! # -
-    _updateRequest(id: ID!, request: UpdateRequest!): Request! # -
+    createRequest(orderId: ID!, request: CreatePerformerRequest!): Result!
+    cancelRequest(id: ID!): Result! # only customer
+    setVisibleRequest(id: ID!): Result! # only customer
+    deleteRequest(id: ID!): Result! # only owner
+    _addRequest(request: CreateRequest!): Request!
+    _deleteRequests(idArr: [ID!]!): Result!
+    _updateRequest(id: ID!, request: UpdateRequest!): Request!
   }
 `;
