@@ -22,7 +22,7 @@ export default gql`
   }
 
   input InputComment {
-    order: ID!
+    orderId: ID!
     text: String!
   }
   type Comments {
@@ -35,14 +35,16 @@ export default gql`
   }
 
   extend type Query {
-    getCommentsByOrder(id: ID!): Comments! # -
-    getMyComments: Comments! # -
-    _getComments(paginate: Paginate!): Comments! # -
-    _getComment(id: ID!): Comment! # -
+    getCommentsByOrder(id: ID!, paginate: Paginate!): Comments!
+    getMyComments(paginate: Paginate!): Comments!
+    _getComments(paginate: Paginate!): Comments!
+    _getComment(id: ID!): Comment!
   }
   extend type Mutation {
-    _addComment(comment: CreateComment!): Comment! # -
-    _deleteComment(idArr: [ID!]!): Result! # -
-    _updateComment(id: ID!, comment: UpdateComment!): Comment! # -
+    addComment(comment: InputComment!): Result!
+    setVisibleComment(id: ID!): Result!
+    _addComment(comment: CreateComment!): Comment!
+    _deleteComments(idArr: [ID!]!): Result!
+    _updateComment(id: ID!, comment: UpdateComment!): Comment!
   }
 `;

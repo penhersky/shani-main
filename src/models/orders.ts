@@ -19,6 +19,7 @@ export interface OrderType extends mongoose.Document {
     lat: string;
     lng: string;
   };
+  allowСomments: boolean;
   visible?: boolean;
   deleted?: boolean;
 }
@@ -90,7 +91,17 @@ const Schema = new mongoose.Schema(
       ref: tables.category,
       default: [],
     },
+    allowСomments: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
     visible: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    deleted: {
       type: Boolean,
       required: false,
       default: false,
