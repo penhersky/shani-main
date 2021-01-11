@@ -3,8 +3,8 @@ import { gql } from 'apollo-server-express';
 export default gql`
   type Comment {
     id: ID!
-    user: User
-    order: Order
+    user: User @cacheControl(maxAge: 3600000)
+    order: Order @cacheControl(maxAge: 3600000)
     text: String
     visible: Boolean
     createdAt: String
@@ -36,7 +36,8 @@ export default gql`
 
   extend type Query {
     getCommentsByOrder(id: ID!, paginate: Paginate!): Comments!
-    getMyComments(paginate: Paginate!): Comments!
+      @cacheControl(maxAge: 1000)
+    getMyComments(paginate: Paginate!): Comments! @cacheControl(maxAge: 60000)
     _getComments(paginate: Paginate!): Comments!
     _getComment(id: ID!): Comment!
   }

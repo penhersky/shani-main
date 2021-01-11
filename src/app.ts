@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import redis from 'redis';
 import { graphql } from 'body-parser-graphql';
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-express';
+import 'apollo-cache-control';
 import cors from 'cors';
 
 import typeDefs from './typeDefs';
@@ -51,6 +52,9 @@ const schema = makeExecutableSchema({
 const apolloServer = new ApolloServer({
   schema,
   context: ({ req, res }) => ({ req, res, io, storage: client }),
+  cacheControl: {
+    defaultMaxAge: 10,
+  },
 });
 
 apolloServer.applyMiddleware({ app, path: '/graphql' });

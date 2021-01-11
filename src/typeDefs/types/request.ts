@@ -3,8 +3,8 @@ import { gql } from 'apollo-server-express';
 export default gql`
   type Request {
     id: ID!
-    user: User
-    order: Order
+    user: User @cacheControl(maxAge: 3600000)
+    order: Order @cacheControl(maxAge: 3600000)
     text: String
     price: String
     time: String
@@ -42,8 +42,8 @@ export default gql`
   }
 
   extend type Query {
-    getRequestsByOrder(id: ID!): Requests!
-    getMyRequests: Requests!
+    getRequestsByOrder(id: ID!): Requests! @cacheControl(maxAge: 1000)
+    getMyRequests: Requests! @cacheControl(maxAge: 10000)
     _getRequests(paginate: Paginate!): Requests!
     _getRequest(id: ID!): Request!
   }

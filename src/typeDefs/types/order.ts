@@ -18,11 +18,11 @@ export default gql`
     name: String!
     description: String
     price: String
-    categories: [Category]
-    comments: [Comment]
-    requests: [Request]!
-    customer: User!
-    performer: User
+    categories: [Category] @cacheControl(maxAge: 60000)
+    comments: [Comment] @cacheControl(maxAge: 60000)
+    requests: [Request]! @cacheControl(maxAge: 60000)
+    customer: User! @cacheControl(maxAge: 3600000)
+    performer: User @cacheControl(maxAge: 10000)
     status: String
     time: String
     from: String
