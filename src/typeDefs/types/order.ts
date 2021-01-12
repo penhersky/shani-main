@@ -7,7 +7,7 @@ export default gql`
     lng: String
   }
 
-  input inputOrderLocation {
+  input InputOrderLocation {
     name: String
     lat: String
     lng: String
@@ -46,7 +46,7 @@ export default gql`
     from: String
     to: String
     locationType: String
-    location: inputOrderLocation
+    location: InputOrderLocation
     allowComments: Boolean
     visible: Boolean
     deleted: Boolean
@@ -63,7 +63,7 @@ export default gql`
     from: String
     to: String
     locationType: String
-    location: inputOrderLocation
+    location: InputOrderLocation
     allowComments: Boolean
     visible: Boolean
     deleted: Boolean
@@ -72,15 +72,13 @@ export default gql`
     name: String!
     description: String
     price: String
-    categories: [ID]
+    categories: [ID]!
     customer: ID!
-    performer: ID
-    status: String
     time: String
     from: String
     to: String
     locationType: String
-    location: inputOrderLocation
+    location: InputOrderLocation
     visible: Boolean
     allowComments: Boolean
   }
@@ -93,11 +91,18 @@ export default gql`
     orders: [Order]
   }
 
+  type OrderResult {
+    result: result!
+    status: Int
+    order: Order
+  }
+
   extend type Query {
     _getOrders(paginate: Paginate!): Orders!
     _getOrder(id: ID!): Order!
   }
   extend type Mutation {
+    createOrder(order: OrderInput!): OrderResult!
     _addOrder(id: ID!, order: CreateOrder!): Order!
     _deleteOrders(idArr: [ID!]!): Result!
     _updateOrder(id: ID!, order: UpdateOrder!): Category!

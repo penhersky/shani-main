@@ -5,8 +5,6 @@ import auth from '../../../lib/checkAuth';
 import events from '../../../io/events';
 import { sendOne } from '../../../io/wrappers';
 
-import { Context } from '../../../types/resolver';
-
 const addComment = async (_: any, { comment }: any, context: any) =>
   cather(
     async (user: any) => {

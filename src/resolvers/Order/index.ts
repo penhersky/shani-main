@@ -9,9 +9,11 @@ import {
 } from '../../lib/templates';
 
 import OrderType from './Order';
+import { createOrder } from './Mutation';
 
 export default {
   Mutation: {
+    createOrder,
     _addOrder: add(Order, 'order'),
     _updateOrder: update(Order, 'order'),
     _deleteOrders: deleteMany(Order, 'order'),

@@ -42,7 +42,7 @@ export default gql`
     _getComment(id: ID!): Comment!
   }
   extend type Mutation {
-    addComment(comment: InputComment!): Result!
+    createComment(comment: InputComment!): Result!
     setVisibleComment(id: ID!): Result!
     deleteComment(id: ID!): Result!
     _addComment(comment: CreateComment!): Comment!
