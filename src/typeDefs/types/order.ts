@@ -94,12 +94,12 @@ export default gql`
   }
 
   extend type Query {
-    _getOrders(paginate: Paginate!): Orders! # -
-    _getOrder(id: ID!): Order! # -
+    _getOrders(paginate: Paginate!): Orders!
+    _getOrder(id: ID!): Order!
   }
   extend type Mutation {
-    _addOrder(id: ID!, order: CreateOrder!): Order! # -
-    _deleteOrders(idArr: [ID!]!): Result! # -
-    _updateOrder(id: ID!, order: UpdateOrder!): Category! # -
+    _addOrder(id: ID!, order: CreateOrder!): Order!
+    _deleteOrders(idArr: [ID!]!): Result!
+    _updateOrder(id: ID!, order: UpdateOrder!): Category!
   }
 `;
