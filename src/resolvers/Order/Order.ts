@@ -3,7 +3,7 @@ import cather from '../../wrappers/typeCather';
 import authUser from '../../lib/checkAuth';
 
 import categories from '../Category/Resolve';
-import user from '../User/resolve';
+import { findCustomer, findPerformer } from '../User/resolve';
 
 export default {
   categories,
@@ -25,6 +25,6 @@ export default {
       context,
       authUser,
     ),
-  customer: user('customer'),
-  performer: user('performer'),
+  customer: findCustomer,
+  performer: findPerformer,
 };

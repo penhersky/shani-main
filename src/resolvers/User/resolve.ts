@@ -8,3 +8,8 @@ import cather from '../../wrappers/typeCather';
  */
 export default (key = 'user') => async (root: any) =>
   cather(async () => User.findById(root[key]));
+
+export const findCustomer = async (root: any) =>
+  cather(async () => User.findById(root?.customer));
+export const findPerformer = async (root: any) =>
+  cather(async () => User.findById(root?.performer));

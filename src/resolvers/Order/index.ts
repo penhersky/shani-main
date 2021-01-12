@@ -10,6 +10,7 @@ import {
 
 import OrderType from './Order';
 import { createOrder } from './Mutation';
+import { getMyOrders } from './Query';
 
 export default {
   Mutation: {
@@ -19,6 +20,7 @@ export default {
     _deleteOrders: deleteMany(Order, 'order'),
   },
   Query: {
+    getMyOrders,
     _getOrders: getManyPaginated(Order, 'orders'),
     _getOrder: getOne(Order),
   },

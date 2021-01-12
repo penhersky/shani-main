@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 import { tables } from '../lib/constants';
 
@@ -69,8 +70,7 @@ const Schema = new mongoose.Schema(
     },
     locationType: {
       type: String,
-      enum: ['none', 'place', 'online', 'other'],
-      required: true,
+      required: false,
     },
     location: {
       required: false,
@@ -99,7 +99,7 @@ const Schema = new mongoose.Schema(
     visible: {
       type: Boolean,
       required: false,
-      default: false,
+      default: true,
     },
     deleted: {
       type: Boolean,
@@ -120,6 +120,8 @@ Schema.index({
     name: 'text',
   },
 });
+
+Schema.plugin(mongoosePaginate);
 
 interface Order<T extends mongoose.Document>
   extends mongoose.PaginateModel<T> {}

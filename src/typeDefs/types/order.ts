@@ -20,7 +20,7 @@ export default gql`
     price: String
     categories: [Category] @cacheControl(maxAge: 60000)
     comments: [Comment] @cacheControl(maxAge: 60000)
-    requests: [Request]! @cacheControl(maxAge: 60000)
+    requests: [Request] @cacheControl(maxAge: 60000)
     customer: User! @cacheControl(maxAge: 3600000)
     performer: User @cacheControl(maxAge: 10000)
     status: String
@@ -73,7 +73,6 @@ export default gql`
     description: String
     price: String
     categories: [ID]!
-    customer: ID!
     time: String
     from: String
     to: String
@@ -102,7 +101,6 @@ export default gql`
     _getOrder(id: ID!): Order!
   }
   extend type Mutation {
-    createOrder(order: OrderInput!): OrderResult!
     _addOrder(id: ID!, order: CreateOrder!): Order!
     _deleteOrders(idArr: [ID!]!): Result!
     _updateOrder(id: ID!, order: UpdateOrder!): Category!

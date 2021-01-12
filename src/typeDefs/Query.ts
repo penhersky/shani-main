@@ -5,6 +5,6 @@ export default gql`
     getOrdersByCategory(id: ID!): Orders! # -
     getOrdersByUser(id: ID!): Orders! # -
     searchOrders(text: String!): Orders! # -
-    getMyOrders: Orders! # -
+    getMyOrders(pagination: Paginate): Orders!
   }
 `;

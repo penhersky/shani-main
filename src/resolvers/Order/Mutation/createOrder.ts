@@ -16,7 +16,10 @@ const createOrder = async (_: any, { order }: any, context: Context) =>
           status: 402,
         };
 
-      const newOrder: any = await Order.create(order);
+      const newOrder: any = await Order.create({
+        ...order,
+        customer: user.id,
+      });
 
       if (order?.categories.length > 0) {
         const users = await User.find({
