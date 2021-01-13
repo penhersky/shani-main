@@ -1,22 +1,22 @@
-import { Comment } from '../../../models';
+import { Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
 import identity from '../../../lib/checkIdentity';
 
 import { Context } from '../../../types/resolver';
 
-const deleteComment = async (_: any, { id }: any, context: Context) =>
+const setOrderCommented = async (_: any, { id }: any, context: Context) =>
   cather(
     async (user: any) => {
-      const comment = await Comment.findById(id);
+      const order = await Order.findById(id);
 
-      const result = identity(user, comment);
+      const result = identity(user, order, 'customer');
       if (result) return result;
 
-      await comment?.deleteOne();
+      await order?.updateOne({ allowComments: !order?.allowComments });
 
       return {
-        status: 25,
+        status: 21,
         result: 'SUCCESS',
       };
     },
@@ -24,4 +24,4 @@ const deleteComment = async (_: any, { id }: any, context: Context) =>
     auth,
   );
 
-export default deleteComment;
+export default setOrderCommented;

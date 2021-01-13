@@ -1,6 +1,7 @@
 import { Request, Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
+import identity from '../../../lib/checkIdentity';
 
 import events from '../../../io/events';
 import { sendOne } from '../../../io/wrappers';
@@ -17,11 +18,8 @@ const cancelRequest = async (_: any, { id }: any, context: Context) =>
           status: 44,
         };
       const order = await Order.findById(request.order);
-      if (!order || order.customer !== user.id)
-        return {
-          status: 401,
-          result: 'ERROR',
-        };
+      const result = identity(user, order, 'customer');
+      if (result) return result;
 
       await request.updateOne({
         canceled: true,
@@ -33,7 +31,7 @@ const cancelRequest = async (_: any, { id }: any, context: Context) =>
         events.order.canceled_performer,
         String(request.user),
         {
-          order: { id: order.id, name: order.name },
+          order: { id: order?.id, name: order?.name },
         },
       );
 

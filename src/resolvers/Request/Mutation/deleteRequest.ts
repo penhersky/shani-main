@@ -13,7 +13,7 @@ const deleteRequest = async (_: any, { id }: any, context: Context) =>
           result: 'ERROR',
           status: 44,
         };
-      if (!request.user !== user.id)
+      if (String(request.user) !== String(user.id))
         return {
           result: 'ERROR',
           status: 401,
