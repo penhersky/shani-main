@@ -5,4 +5,6 @@ export { default as setOrderPerformer } from './setOrderPerformer';
 export {
   setOrderStatusToCanceled,
   setOrderStatusToClosed,
+  setOrderStatusToDone,
+  setOrderStatusToInProcessing,
 } from './setOrderStatus';
