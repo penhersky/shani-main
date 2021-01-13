@@ -1,3 +1,12 @@
+export const paginationSuccess = (list: any, key: string) => ({
+  result: 'SUCCESS',
+  totalItems: list.totalDocs,
+  page: list.page,
+  limit: list.limit,
+  totalPages: list.totalPages,
+  [key]: list.docs,
+});
+
 export const paginated = async (
   pagination: any,
   model: any,
@@ -9,14 +18,7 @@ export const paginated = async (
     page: pagination.page,
   });
 
-  return {
-    result: 'SUCCESS',
-    totalItems: list.totalDocs,
-    page: list.page,
-    limit: list.limit,
-    totalPages: list.totalPages,
-    [key]: list.docs,
-  };
+  return paginationSuccess(list, key);
 };
 
 export const paginatedWidthSort = async (
@@ -31,12 +33,5 @@ export const paginatedWidthSort = async (
     sort: { [pagination.sortKey]: pagination?.sort === 'ASC' ? 1 : -1 },
   });
 
-  return {
-    result: 'SUCCESS',
-    totalItems: list.totalDocs,
-    page: list.page,
-    limit: list.limit,
-    totalPages: list.totalPages,
-    [key]: list.docs,
-  };
+  return paginationSuccess(list, key);
 };

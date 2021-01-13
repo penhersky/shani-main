@@ -1,6 +1,7 @@
 import { Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
+import { paginated } from '../../../lib/templates';
 
 import { Context } from '../../../types/resolver';
 
@@ -11,25 +12,10 @@ const getOrdersByUser = async (
 ) =>
   cather(
     async () => {
-      const orders = await Order.paginate(
-        {
-          $or: [{ performer: id }, { customer: id }],
-          deleted: false,
-        },
-        {
-          limit: pagination.limit,
-          page: pagination.page,
-        },
-      );
-
-      return {
-        result: 'SUCCESS',
-        totalItems: orders.totalDocs,
-        page: orders.page,
-        limit: orders.limit,
-        totalPages: orders.totalPages,
-        orders: orders.docs,
-      };
+      return paginated(pagination, Order, 'orders', {
+        $or: [{ performer: id }, { customer: id }],
+        deleted: false,
+      });
     },
     context,
     auth,

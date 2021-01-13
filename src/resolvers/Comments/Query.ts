@@ -1,6 +1,7 @@
 import { Comment } from '../../models';
 import cather from '../../wrappers/resolverCather';
 import auth from '../../lib/checkAuth';
+import { paginated } from '../../lib/templates';
 
 export const getCommentsByOrder = async (
   _: any,
@@ -9,23 +10,10 @@ export const getCommentsByOrder = async (
 ) =>
   cather(
     async () => {
-      const comments = await Comment.paginate(
-        { order: id, visible: true },
-        {
-          limit: paginate.limit,
-          page: paginate.page,
-          sort: { [paginate.sortKey]: paginate?.sort === 'ASC' ? 1 : -1 },
-        },
-      );
-
-      return {
-        result: 'SUCCESS',
-        totalItems: comments.totalDocs,
-        page: comments.page,
-        limit: comments.limit,
-        totalPages: comments.totalPages,
-        comments: comments.docs,
-      };
+      return paginated(paginate, Comment, 'comments', {
+        order: id,
+        visible: true,
+      });
     },
     context,
     auth,
@@ -34,23 +22,9 @@ export const getCommentsByOrder = async (
 export const getMyComments = async (_: any, { paginate }: any, context: any) =>
   cather(
     async (user: any) => {
-      const comments = await Comment.paginate(
-        { user: user.id },
-        {
-          limit: paginate.limit,
-          page: paginate.page,
-          sort: { [paginate.sortKey]: paginate?.sort === 'ASC' ? 1 : -1 },
-        },
-      );
-
-      return {
-        result: 'SUCCESS',
-        totalItems: comments.totalDocs,
-        page: comments.page,
-        limit: comments.limit,
-        totalPages: comments.totalPages,
-        comments: comments.docs,
-      };
+      return paginated(paginate, Comment, 'comments', {
+        user: user.id,
+      });
     },
     context,
     auth,
