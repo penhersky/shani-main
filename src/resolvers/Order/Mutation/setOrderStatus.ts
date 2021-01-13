@@ -21,12 +21,17 @@ const setOrderStatus = (
       const result = identity(user, order, hu);
       if (result) return result;
 
-      if (hu === 'performer' && ['closed', 'canceled'].includes(order.status)) {
+      if (hu === 'performer' && ['closed', 'canceled'].includes(order.status))
         return {
           status: 401,
           result: 'ERROR',
         };
-      }
+
+      if (hu === 'customer' && order.status === 'done' && status === 'canceled')
+        return {
+          status: 401,
+          result: 'ERROR',
+        };
 
       await order?.updateOne({ status });
 

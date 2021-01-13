@@ -10,9 +10,9 @@ export default gql`
     setOrderStatusToInProcessing(id: ID!): Result! # performer
     setOrderStatusToClosed(id: ID!): Result!
     setOrderStatusToCanceled(id: ID!): Result!
-    # performer
+    #
     setOrderPerformer(id: ID!, performer: ID!): Result!
-    cancelOrderPerformer(id: ID!): Result! # -
+    cancelOrderPerformer(id: ID!): Result!
     deleteOrder(id: ID!): Result!
     #
     setOrderCommented(id: ID!): Result!
