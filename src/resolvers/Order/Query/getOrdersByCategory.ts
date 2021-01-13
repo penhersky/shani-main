@@ -4,18 +4,23 @@ import auth from '../../../lib/checkAuth';
 
 import { Context } from '../../../types/resolver';
 
-const getMyOrders = async (_: any, { pagination }: any, context: Context) =>
+const getOrdersByCategory = async (
+  _: any,
+  { id, text, pagination }: any,
+  context: Context,
+) =>
   cather(
-    async (user: any) => {
+    async () => {
+      const search = text ? { $text: { $search: text } } : {};
       const orders = await Order.paginate(
         {
-          $or: [{ performer: user.id }, { customer: user.id }],
+          categories: id,
+          ...search,
           deleted: false,
         },
         {
           limit: pagination.limit,
           page: pagination.page,
-          sort: { [pagination.sortKey]: pagination?.sort === 'ASC' ? 1 : -1 },
         },
       );
 
@@ -32,4 +37,4 @@ const getMyOrders = async (_: any, { pagination }: any, context: Context) =>
     auth,
   );
 
-export default getMyOrders;
+export default getOrdersByCategory;

@@ -7,4 +7,8 @@ export default gql`
     sort: sort = DESC
     sortKey: String = createdAt
   }
+  input Pagination {
+    page: Int = 1
+    limit: Int = 10
+  }
 `;

@@ -14,6 +14,7 @@ export interface UserType extends mongoose.Document {
   birthday?: string;
   categoriesId?: [string];
   accountType?: mongoose.Types.ObjectId;
+  deleted?: Boolean;
 }
 
 const Schema = new mongoose.Schema({});

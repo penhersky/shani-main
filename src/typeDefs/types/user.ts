@@ -10,5 +10,6 @@ export default gql`
     middleName: String
     categories: [Category]
     image: String
+    deleted: Boolean
   }
 `;

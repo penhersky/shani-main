@@ -9,18 +9,18 @@ import {
 } from '../../lib/templates';
 
 import OrderType from './Order';
-import { createOrder } from './Mutation';
-import { getMyOrders } from './Query';
+import * as mutation from './Mutation';
+import * as query from './Query';
 
 export default {
   Mutation: {
-    createOrder,
+    ...mutation,
     _addOrder: add(Order, 'order'),
     _updateOrder: update(Order, 'order'),
     _deleteOrders: deleteMany(Order, 'order'),
   },
   Query: {
-    getMyOrders,
+    ...query,
     _getOrders: getManyPaginated(Order, 'orders'),
     _getOrder: getOne(Order),
   },

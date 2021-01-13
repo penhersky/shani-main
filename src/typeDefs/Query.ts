@@ -2,9 +2,12 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
   type Query {
-    getOrdersByCategory(id: ID!): Orders! # -
-    getOrdersByUser(id: ID!): Orders! # -
-    searchOrders(text: String!): Orders! # -
+    getOrdersByCategory(
+      id: ID!
+      text: String!
+      pagination: Pagination!
+    ): Orders!
+    getOrdersByUser(id: ID!, pagination: Pagination!): Orders! # -
     getMyOrders(pagination: Paginate): Orders!
   }
 `;
