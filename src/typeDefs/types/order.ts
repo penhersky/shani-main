@@ -98,6 +98,7 @@ export default gql`
 
   extend type Query {
     _getOrders(paginate: Paginate!): Orders!
+    _getOrdersByTimeInterval: [Order]!
     _getOrder(id: ID!): Order!
   }
   extend type Mutation {
