@@ -21,6 +21,13 @@ const setOrderStatus = (
       const result = identity(user, order, hu);
       if (result) return result;
 
+      if (hu === 'performer' && ['closed', 'canceled'].includes(order.status)) {
+        return {
+          status: 401,
+          result: 'ERROR',
+        };
+      }
+
       await order?.updateOne({ status });
 
       if (order[to])
@@ -28,6 +35,8 @@ const setOrderStatus = (
           order: {
             id: order?.id,
             name: order?.name,
+            oldStatus: order.status,
+            newStatus: status,
           },
         });
 

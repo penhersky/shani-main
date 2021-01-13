@@ -13,7 +13,7 @@ export default gql`
     # performer
     setOrderPerformer(id: ID!, performer: ID!): Result!
     cancelOrderPerformer(id: ID!): Result! # -
-    deleteOrder(id: ID!): Result! # -
+    deleteOrder(id: ID!): Result!
     #
     setOrderCommented(id: ID!): Result!
   }
