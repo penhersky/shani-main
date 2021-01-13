@@ -28,6 +28,5 @@ const setOrderStatus = (status: string) => async (
     auth,
   );
 
-export const setOrderStatusToDone = setOrderStatus('done');
 export const setOrderStatusToClosed = setOrderStatus('closed');
 export const setOrderStatusToCanceled = setOrderStatus('canceled');

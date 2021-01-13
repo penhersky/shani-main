@@ -6,11 +6,11 @@ export default gql`
     updateOrder(id: ID!, order: OrderInput!): Result!
     setOrderVisible(id: ID!): Result!
     # order status
-    setOrderStatusToDone(id: ID!): Result!
+    setOrderStatusToDone(id: ID!): Result! # - performer
     setOrderStatusToClosed(id: ID!): Result!
     setOrderStatusToCanceled(id: ID!): Result!
     # performer
-    setOrderPerformer(id: ID!, performer: ID!): Result! # -
+    setOrderPerformer(id: ID!, performer: ID!): Result!
     cancelOrderPerformer(id: ID!): Result! # -
     deleteOrder(id: ID!): Result! # -
     #
