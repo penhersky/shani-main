@@ -1,22 +1,22 @@
-import { Request } from '../../../models';
+import { Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
 import identity from '../../../lib/checkIdentity';
 
 import { Context } from '../../../types/resolver';
 
-const deleteRequest = async (_: any, { id }: any, context: Context) =>
+const updateOrder = async (_: any, { id, order }: any, context: Context) =>
   cather(
     async (user: any) => {
-      const request = await Request.findById(id);
+      const findOrder = await Order.findById(id);
 
-      const result = identity(user, request);
+      const result = identity(user, order, 'customer');
       if (result) return result;
 
-      await request?.deleteOne();
+      findOrder?.updateOne({ ...order });
 
       return {
-        status: 25,
+        status: 21,
         result: 'SUCCESS',
       };
     },
@@ -24,4 +24,4 @@ const deleteRequest = async (_: any, { id }: any, context: Context) =>
     auth,
   );
 
-export default deleteRequest;
+export default updateOrder;

@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 export default gql`
   type Mutation {
     createOrder(order: OrderInput!): OrderResult!
-    updateOrder(id: ID!, order: OrderInput!): Result! # -
+    updateOrder(id: ID!, order: OrderInput!): Result!
     setOrderVisible(id: ID!): Result! # -
     # order status
     setOrderStatusToDone(id: ID!): Result! # -
