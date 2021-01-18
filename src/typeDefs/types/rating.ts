@@ -22,8 +22,9 @@ export default gql`
   }
 
   extend type Query {
-    getMyRatings(id: ID!, pagination: Paginate): Ratings!
-    getUserRatings(pagination: Paginate): Ratings!
+    getMyAverage: Int!
+    getMyRatings(id: ID!, paginate: Paginate): Ratings!
+    getUserRatings(paginate: Paginate): Ratings!
   }
   extend type Mutation {
     addRatingFromPerformer(score: Int!, order: ID!): Result!
