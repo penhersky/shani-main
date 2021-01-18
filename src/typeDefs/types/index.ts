@@ -5,6 +5,7 @@ import comment from './comment';
 import request from './request';
 import user from './user';
 import order from './order';
+import rating from './rating';
 
 import results from './results';
 import params from './params';
@@ -19,4 +20,5 @@ export default concatenateTypeDefs([
   order,
   request,
   comment,
+  rating,
 ]);

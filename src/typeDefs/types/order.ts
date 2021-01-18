@@ -22,7 +22,9 @@ export default gql`
     comments: [Comment] @cacheControl(maxAge: 60000)
     requests: [Request] @cacheControl(maxAge: 60000)
     customer: User! @cacheControl(maxAge: 3600000)
-    performer: User @cacheControl(maxAge: 10000)
+    customerRating: Rating
+    performer: User @cacheControl(maxAge: 1000)
+    performerRating: Rating
     status: String
     time: String
     from: String

@@ -6,4 +6,5 @@ export const tables = {
   order: 'Order',
   request: 'Request',
   image: 'OrderImage',
+  rating: 'Rating',
 };
