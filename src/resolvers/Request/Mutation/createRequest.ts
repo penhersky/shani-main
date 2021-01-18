@@ -1,6 +1,7 @@
 import { Request, Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
+import { userType, orderStatuses } from '../../../lib/constants';
 
 import events from '../../../io/events';
 import { sendOne } from '../../../io/wrappers';
@@ -21,13 +22,19 @@ const creteRequest = async (
           result: 'ERROR',
         };
 
-      if (user.type !== 'performer')
+      if (user.type !== userType.performer)
         return {
           status: 401,
           result: 'ERROR',
         };
 
-      if (['done', 'closed', 'canceled'].includes(String(order?.status)))
+      if (
+        [
+          orderStatuses.done,
+          orderStatuses.closed,
+          orderStatuses.canceled,
+        ].includes(String(order?.status))
+      )
         return {
           result: 'ERROR',
           status: 401,

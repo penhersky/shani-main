@@ -1,6 +1,7 @@
 import { Order, User } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
+import { userType } from '../../../lib/constants';
 
 import events from '../../../io/events';
 import { sendMany } from '../../../io/wrappers';
@@ -10,7 +11,7 @@ import { Context } from '../../../types/resolver';
 const createOrder = async (_: any, { order }: any, context: Context) =>
   cather(
     async (user: any) => {
-      if (user.type !== 'customer')
+      if (user.type !== userType.customer)
         return {
           result: 'ERROR',
           status: 402,

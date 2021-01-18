@@ -2,6 +2,7 @@ import { Order, User } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
 import identity from '../../../lib/checkIdentity';
+import { userType } from '../../../lib/constants';
 
 import events from '../../../io/events';
 import { sendOne } from '../../../io/wrappers';
@@ -17,11 +18,15 @@ const setOrderPerformer = async (
     async (user: any) => {
       const order = await Order.findById(id);
 
-      const result = identity(user, order, 'customer');
+      const result = identity(user, order, userType.customer);
       if (result) return result;
 
       const worker = await User.findById(performer);
-      if (!worker || worker.deleted || worker?.get('type') !== 'performer')
+      if (
+        !worker ||
+        worker.deleted ||
+        worker?.get('type') !== userType.performer
+      )
         return {
           result: 'ERROR',
           status: 401,

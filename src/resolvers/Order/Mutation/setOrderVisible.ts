@@ -2,6 +2,7 @@ import { Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
 import identity from '../../../lib/checkIdentity';
+import { userType } from '../../../lib/constants';
 
 import { Context } from '../../../types/resolver';
 
@@ -10,7 +11,7 @@ const setOrderVisible = async (_: any, { id }: any, context: Context) =>
     async (user: any) => {
       const order = await Order.findById(id);
 
-      const result = identity(user, order, 'customer');
+      const result = identity(user, order, userType.customer);
       if (result) return result;
 
       await order?.updateOne({ visible: !order?.visible });

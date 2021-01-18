@@ -2,6 +2,7 @@ import { Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
 import identity from '../../../lib/checkIdentity';
+import { userType, orderStatuses } from '../../../lib/constants';
 
 import events from '../../../io/events';
 import { sendOne } from '../../../io/wrappers';
@@ -21,13 +22,10 @@ const setOrderStatus = (
       const result = identity(user, order, hu);
       if (result) return result;
 
-      if (hu === 'performer' && ['closed', 'canceled'].includes(order.status))
-        return {
-          status: 401,
-          result: 'ERROR',
-        };
-
-      if (hu === 'customer' && order.status === 'done' && status === 'canceled')
+      if (
+        hu === userType.performer &&
+        [orderStatuses.closed, orderStatuses.canceled].includes(order.status)
+      )
         return {
           status: 401,
           result: 'ERROR',

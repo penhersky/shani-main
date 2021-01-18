@@ -2,6 +2,7 @@ import { Comment, Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
 import identity from '../../../lib/checkIdentity';
+import { userType } from '../../../lib/constants';
 
 const setVisible = async (_: any, { id }: any, context: any) =>
   cather(
@@ -14,7 +15,7 @@ const setVisible = async (_: any, { id }: any, context: any) =>
         };
 
       const order = await Order.findById(comment.order);
-      const result = identity(user, order, 'customer');
+      const result = identity(user, order, userType.customer);
       if (result) return result;
 
       await order?.updateOne({

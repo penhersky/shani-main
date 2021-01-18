@@ -2,6 +2,7 @@ import { Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
 import identity from '../../../lib/checkIdentity';
+import { userType, orderStatuses } from '../../../lib/constants';
 
 import events from '../../../io/events';
 import { sendOne } from '../../../io/wrappers';
@@ -13,16 +14,23 @@ const setOrderPerformer = async (_: any, { id }: any, context: Context) =>
     async (user: any) => {
       const order = await Order.findById(id);
 
-      const result = identity(user, order, 'customer');
+      const result = identity(user, order, userType.customer);
       if (result) return result;
 
-      if (['canceled', 'closed'].includes(String(order?.status)))
+      if (
+        [orderStatuses.created, orderStatuses.closed].includes(
+          String(order?.status),
+        )
+      )
         return {
           result: 'ERROR',
           status: 401,
         };
 
-      await order?.updateOne({ performer: null, status: 'created' });
+      await order?.updateOne({
+        performer: null,
+        status: orderStatuses.created,
+      });
 
       if (order?.performer)
         sendOne(

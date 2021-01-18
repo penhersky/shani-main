@@ -1,6 +1,8 @@
 import { Request, Order } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
+import identity from '../../../lib/checkIdentity';
+import { userType } from '../../../lib/constants';
 
 import { Context } from '../../../types/resolver';
 
@@ -14,11 +16,8 @@ const cancelRequest = async (_: any, { id }: any, context: Context) =>
           status: 44,
         };
       const order = await Order.findById(request.order);
-      if (!order || order.customer !== user.id)
-        return {
-          status: 401,
-          result: 'ERROR',
-        };
+      const result = identity(user, order, userType.customer);
+      if (result) return result;
 
       await request.updateOne({
         visible: !request.visible,
