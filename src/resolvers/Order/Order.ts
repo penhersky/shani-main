@@ -4,6 +4,7 @@ import authUser from '../../lib/checkAuth';
 
 import categories from '../Category/Resolve';
 import { findCustomer, findPerformer } from '../User/resolve';
+import rating from '../Rating/Resolve';
 
 export default {
   categories,
@@ -26,5 +27,7 @@ export default {
       authUser,
     ),
   customer: findCustomer,
+  customerRating: rating('customer'),
   performer: findPerformer,
+  performerRating: rating('performer'),
 };

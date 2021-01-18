@@ -27,10 +27,11 @@ export default gql`
   }
 
   extend type Query {
-    getMyAverage: RatingRes!
-    getUserAverage(id: ID!): RatingRes!
+    getMyAverage: RatingRes! @cacheControl(maxAge: 5000)
+    getUserAverage(id: ID!): RatingRes! @cacheControl(maxAge: 5000)
     getMyRatings(id: ID!, paginate: Paginate): Ratings!
-    getUserRatings(paginate: Paginate): Ratings!
+      @cacheControl(maxAge: 5000)
+    getUserRatings(paginate: Paginate): Ratings! @cacheControl(maxAge: 5000)
   }
   extend type Mutation {
     addRatingFromPerformer(score: Float!, order: ID!): Result!
