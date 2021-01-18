@@ -21,7 +21,7 @@ const setOrderPerformer = async (
       if (result) return result;
 
       const worker = await User.findById(performer);
-      if (!worker || worker.deleted || worker.type !== 'performer')
+      if (!worker || worker.deleted || worker?.get('type') !== 'performer')
         return {
           result: 'ERROR',
           status: 401,

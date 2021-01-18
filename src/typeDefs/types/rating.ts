@@ -6,7 +6,7 @@ export default gql`
     owner: User!
     order: Order!
     user: User!
-    score: Int!
+    score: Float!
     visible: Boolean
     createdAt: String
     updatedAt: String
@@ -21,13 +21,19 @@ export default gql`
     ratings: [Rating]
   }
 
+  type RatingRes {
+    score: Float!
+    count: Int!
+  }
+
   extend type Query {
-    getMyAverage: Int!
+    getMyAverage: RatingRes!
+    getUserAverage(id: ID!): RatingRes!
     getMyRatings(id: ID!, paginate: Paginate): Ratings!
     getUserRatings(paginate: Paginate): Ratings!
   }
   extend type Mutation {
-    addRatingFromPerformer(score: Int!, order: ID!): Result!
-    addRatingFromCustomer(score: Int!, order: ID!): Result!
+    addRatingFromPerformer(score: Float!, order: ID!): Result!
+    addRatingFromCustomer(score: Float!, order: ID!): Result!
   }
 `;

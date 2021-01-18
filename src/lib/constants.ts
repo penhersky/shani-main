@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const tables = {
   user: 'User',
   comment: 'Comment',
@@ -7,4 +6,17 @@ export const tables = {
   request: 'Request',
   image: 'OrderImage',
   rating: 'Rating',
+};
+
+export const userType = {
+  customer: 'customer',
+  performer: 'performer',
+};
+
+export const orderStatuses = {
+  created: 'created',
+  inProcess: 'in processing',
+  done: 'done',
+  closed: 'closed',
+  canceled: 'canceled',
 };

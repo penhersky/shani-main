@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 
-import { tables } from '../lib/constants';
+import { tables, orderStatuses } from '../lib/constants';
 
 export interface OrderType extends mongoose.Document {
   name: string;
@@ -52,9 +52,9 @@ const Schema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['created', 'in processing', 'done', 'closed', 'canceled'],
+      enum: Object.keys(orderStatuses),
       required: false,
-      default: 'created',
+      default: orderStatuses.created,
     },
     time: {
       type: String,

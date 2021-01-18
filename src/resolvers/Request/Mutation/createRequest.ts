@@ -27,6 +27,12 @@ const creteRequest = async (
           result: 'ERROR',
         };
 
+      if (['done', 'closed', 'canceled'].includes(String(order?.status)))
+        return {
+          result: 'ERROR',
+          status: 401,
+        };
+
       const newRequest = await Request.create({
         user: user.id,
         order: order.id,

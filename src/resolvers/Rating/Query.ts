@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 import { Rating } from '../../models';
 import cather from '../../wrappers/resolverCather';
 import auth from '../../lib/checkAuth';
@@ -35,7 +37,16 @@ export const getMyRatings = async (_: any, { paginate }: any, context: any) =>
 export const getMyAverage = async (_: any, args: any, context: any) =>
   cather(
     async (user: any) => {
-      return average({ user: user.id });
+      return average({ user: mongoose.Types.ObjectId(user.id) });
+    },
+    context,
+    auth,
+  );
+
+export const getUserAverage = async (_: any, { id }: any, context: any) =>
+  cather(
+    async () => {
+      return average({ user: mongoose.Types.ObjectId(id) });
     },
     context,
     auth,

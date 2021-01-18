@@ -2,13 +2,21 @@ import { Rating } from '../../models';
 
 import cather from '../../wrappers/typeCather';
 
-export const average = (query = {}) => {
-  return Rating.aggregate([
+export const average = async (query = {}) => {
+  const result = await Rating.aggregate([
     { $match: query },
     {
-      $group: { average: { $avg: '$Rating' } },
+      $group: {
+        _id: '$scope',
+        average: { $avg: '$score' },
+        total: { $sum: 1 },
+      },
     },
   ]);
+  return {
+    score: result[0]?.average || 0,
+    count: result[0]?.total || 0,
+  };
 };
 
 /**
