@@ -20,6 +20,7 @@ export interface OrderType extends mongoose.Document {
     lat: string;
     lng: string;
   };
+  premium?: Boolean;
   allowComments: boolean;
   visible?: boolean;
   deleted?: boolean;
@@ -90,6 +91,12 @@ const Schema = new mongoose.Schema(
       required: false,
       ref: tables.category,
       default: [],
+    },
+
+    premium: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     allowComments: {
       type: Boolean,

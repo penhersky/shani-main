@@ -20,7 +20,7 @@ export const getCategoriesByParentId = async (
 
 export const getMainCategories = async (_: any, args: any, context: any) =>
   cather(
-    async () => Category.find({ parent: 'none', visible: true }),
+    async () => Category.find({ parent: undefined, visible: true }),
     context,
     auth,
   );

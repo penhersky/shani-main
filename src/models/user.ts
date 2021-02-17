@@ -4,29 +4,44 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 export interface UserType extends mongoose.Document {
   name: string;
   email: string;
-  provider: string;
   type?: string;
   active?: boolean;
-  firstName?: string;
-  lastName?: string;
-  middleName?: string;
-  description?: string;
-  birthday?: string;
   categoriesId?: [string];
-  accountType?: mongoose.Types.ObjectId;
   deleted?: Boolean;
 }
 
-const Schema = new mongoose.Schema({});
-
-Schema.index({
-  email: 'text',
-  name: 'text',
-  firstName: 'text',
-  lastName: 'text',
-  middleName: 'text',
-  description: 'text',
-  birthday: 'text',
+const Schema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    indexes: true,
+    unique: true,
+  },
+  type: {
+    type: String,
+    enum: ['customer', 'performer'],
+    default: 'performer',
+  },
+  active: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  categoriesId: {
+    type: [String],
+    required: false,
+    default: [],
+  },
+  accountType: { type: mongoose.Schema.Types.ObjectId, ref: 'AccountType' },
+  deleted: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 
 Schema.plugin(mongoosePaginate);

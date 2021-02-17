@@ -27,7 +27,10 @@ import { logInfo, logError } from './lib/logger';
 
 const app = express();
 const server = new http.Server(app);
-const io = new sockets.Server(server, { cors: { origin: '*' } });
+const io = new sockets.Server(server, {
+  cors: { origin: '*' },
+  path: '/notification',
+});
 const client = redis.createClient({
   db: REDIS_DB,
   port: Number(REDIS_PORT),

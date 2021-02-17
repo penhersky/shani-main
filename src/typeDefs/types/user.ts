@@ -5,9 +5,6 @@ export default gql`
     id: ID!
     name: String!
     type: userType
-    firstName: String
-    lastName: String
-    middleName: String
     categories: [Category]
     image: String
     deleted: Boolean

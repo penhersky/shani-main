@@ -10,5 +10,8 @@ export const UserType = {
       Category.find({ _id: { $in: root?.categoriesId || root?.categories } }),
     ),
   image: async (root: any) =>
-    cather(async () => Image.findOne({ user: root.id, active: true })),
+    cather(
+      async () =>
+        (await Image.findOne({ user: root.id, active: true }))?.Location,
+    ),
 };

@@ -39,10 +39,9 @@ export default gql`
   }
 
   extend type Query {
-    getCategories: [Categories]! @cacheControl(maxAge: 3600000)
-    getCategoriesByParentId(id: ID!): [Categories]!
-      @cacheControl(maxAge: 3600000)
-    getMainCategories: [Categories]! @cacheControl(maxAge: 3600000)
+    getCategories: [Category]! @cacheControl(maxAge: 3600000)
+    getCategoriesByParentId(id: ID!): [Category]! @cacheControl(maxAge: 3600000)
+    getMainCategories: [Category]! @cacheControl(maxAge: 3600000)
     _getCategories(paginate: Paginate!): Categories!
       @cacheControl(maxAge: 60000)
     _getCategory(id: ID!): Category! @cacheControl(maxAge: 60000)

@@ -33,7 +33,7 @@ const Schema = new mongoose.Schema(
     parent: {
       type: String,
       required: false,
-      default: 'none',
+      default: undefined,
     },
     visible: {
       type: Boolean,
