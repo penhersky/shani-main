@@ -8,6 +8,6 @@ export default gql`
       pagination: Pagination!
     ): Orders!
     getOrdersByUser(id: ID!, pagination: Pagination!): Orders!
-    getMyOrders(pagination: Paginate): Orders!
+    getMyOrders(pagination: Paginate!): Orders!
   }
 `;

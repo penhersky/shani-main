@@ -13,14 +13,24 @@ export default gql`
     lng: String
   }
 
+  type Payment {
+    price: String
+    currency: String
+  }
+
+  input InputPayment {
+    price: String
+    currency: String
+  }
+
   type Order {
     id: ID!
     name: String!
     description: String
-    price: String
+    payment: Payment
     categories: [Category] @cacheControl(maxAge: 60000)
-    comments: [Comment] @cacheControl(maxAge: 60000)
-    requests: [Request] @cacheControl(maxAge: 60000)
+    comments: Int @cacheControl(maxAge: 60000)
+    requests: Int @cacheControl(maxAge: 60000)
     customer: User! @cacheControl(maxAge: 3600000)
     customerRating: Rating
     performer: User @cacheControl(maxAge: 1000)
@@ -31,6 +41,7 @@ export default gql`
     to: String
     locationType: String
     location: OrderLocation
+    premium: Boolean
     visible: Boolean
     allowComments: Boolean
     deleted: Boolean
@@ -40,7 +51,7 @@ export default gql`
   input CreateOrder {
     name: String!
     description: String
-    price: String
+    payment: InputPayment
     categories: [ID]
     customer: ID!
     status: String
@@ -56,7 +67,7 @@ export default gql`
   input UpdateOrder {
     name: String!
     description: String
-    price: String
+    payment: InputPayment
     categories: [ID]
     customer: ID!
     performer: ID
@@ -73,7 +84,7 @@ export default gql`
   input OrderInput {
     name: String!
     description: String
-    price: String
+    payment: InputPayment
     categories: [ID]!
     time: String
     from: String

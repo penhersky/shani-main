@@ -6,7 +6,10 @@ import { tables, orderStatuses } from '../lib/constants';
 export interface OrderType extends mongoose.Document {
   name: string;
   description: string;
-  price: string;
+  payment?: {
+    price: string;
+    currency: string;
+  };
   categories: mongoose.Types.ObjectId[];
   customer: mongoose.Types.ObjectId;
   performer?: mongoose.Types.ObjectId;
@@ -36,10 +39,15 @@ const Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    price: {
-      type: String,
+    payment: {
       required: false,
-      default: 'contractual',
+      default: {},
+      price: {
+        type: String,
+      },
+      currency: {
+        type: String,
+      },
     },
     customer: {
       type: mongoose.Types.ObjectId,
