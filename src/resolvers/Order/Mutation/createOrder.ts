@@ -1,4 +1,4 @@
-import { Order, User } from '../../../models';
+import { Order, User, OrderImage } from '../../../models';
 import cather from '../../../wrappers/resolverCather';
 import auth from '../../../lib/checkAuth';
 import { userType } from '../../../lib/constants';
@@ -8,7 +8,7 @@ import { sendMany } from '../../../io/wrappers';
 
 import { Context } from '../../../types/resolver';
 
-const createOrder = async (_: any, { order }: any, context: Context) =>
+const createOrder = async (_: any, { order, images }: any, context: Context) =>
   cather(
     async (user: any) => {
       if (user.type !== userType.customer)
@@ -21,6 +21,14 @@ const createOrder = async (_: any, { order }: any, context: Context) =>
         ...order,
         customer: user.id,
       });
+
+      await OrderImage.create(
+        [...images].map((img: any) => ({
+          user: user.id,
+          order: newOrder.id,
+          ...img,
+        })),
+      );
 
       if (order?.categories.length > 0) {
         const users = await User.find({

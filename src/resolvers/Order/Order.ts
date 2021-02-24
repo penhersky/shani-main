@@ -1,4 +1,4 @@
-import { Request, Comment } from '../../models';
+import { Request, Comment, OrderImage } from '../../models';
 import cather from '../../wrappers/typeCather';
 import authUser from '../../lib/checkAuth';
 
@@ -28,6 +28,8 @@ export default {
       context,
       authUser,
     ),
+  images: async (root: any, args: any, context: any) =>
+    cather(async () => OrderImage.find({ order: root.id }), context, authUser),
   customer: findCustomer,
   customerRating: rating('customer'),
   performer: findPerformer,

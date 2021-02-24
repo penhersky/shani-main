@@ -7,6 +7,7 @@ export default gql`
       text: String!
       pagination: Pagination!
     ): Orders!
+    getOrder(id: ID!): OrderResult!
     getOrdersByUser(id: ID!, pagination: Pagination!): Orders!
     getMyOrders(pagination: Paginate!): Orders!
   }

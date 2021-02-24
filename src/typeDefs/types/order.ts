@@ -23,6 +23,22 @@ export default gql`
     currency: String
   }
 
+  type OrderImage {
+    id: ID!
+    order: ID!
+    user: ID!
+    Etag: String
+    Key: String
+    Location: String
+    active: Boolean
+  }
+
+  input InputOrderImage {
+    Etag: String
+    Key: String
+    Location: String
+  }
+
   type Order {
     id: ID!
     name: String!
@@ -35,6 +51,7 @@ export default gql`
     customerRating: Rating
     performer: User @cacheControl(maxAge: 1000)
     performerRating: Rating
+    images: [OrderImage]
     status: String
     time: String
     from: String

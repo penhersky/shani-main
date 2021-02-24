@@ -5,17 +5,21 @@ import { tables } from '../lib/constants';
 
 export interface ImageT extends mongoose.Document {
   order: string;
+  user: string;
   Etag: string;
   Key: string;
   Location: string;
-  active?: Boolean;
 }
 
 const Schema = new mongoose.Schema(
   {
-    user: {
+    order: {
       type: mongoose.Types.ObjectId,
       ref: tables.order,
+    },
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: tables.user,
     },
     Etag: {
       type: String,
@@ -28,11 +32,6 @@ const Schema = new mongoose.Schema(
     Location: {
       type: String,
       required: true,
-    },
-    active: {
-      type: Boolean,
-      required: false,
-      default: true,
     },
   },
   {
