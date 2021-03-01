@@ -1,6 +1,11 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
+  type GroupAverage {
+    score: Int
+    count: Int
+  }
+
   type Rating {
     id: ID!
     owner: User!
@@ -24,6 +29,7 @@ export default gql`
   type RatingRes {
     score: Float!
     count: Int!
+    group: [GroupAverage]
   }
 
   extend type Query {

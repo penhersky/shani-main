@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 import { tables } from '../lib/constants';
 
@@ -52,6 +53,8 @@ const Schema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+Schema.plugin(mongoosePaginate);
 
 interface Request<T extends mongoose.Document>
   extends mongoose.PaginateModel<T> {}

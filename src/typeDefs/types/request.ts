@@ -42,8 +42,9 @@ export default gql`
   }
 
   extend type Query {
-    getRequestsByOrder(id: ID!): Requests! @cacheControl(maxAge: 1000)
-    getMyRequests: Requests! @cacheControl(maxAge: 10000)
+    getRequestsByOrder(id: ID!, paginate: Paginate!): Requests!
+      @cacheControl(maxAge: 1000)
+    getMyRequests(paginate: Paginate!): Requests! @cacheControl(maxAge: 10000)
     _getRequests(paginate: Paginate!): Requests!
     _getRequest(id: ID!): Request!
   }

@@ -10,6 +10,7 @@ export default (socket: Socket, client: RedisClient) => {
     socket.emit('message', { message: `send: ${data.message}` });
   });
   socket.on('disconnect', (dis) => {
+    console.log(dis);
     console.log(`User disconnected! id: ${dis.id}`);
   });
 };
