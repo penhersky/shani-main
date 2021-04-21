@@ -34,6 +34,11 @@ export default gql`
     comments: [Comment]
   }
 
+  type CommentRes {
+    result: result
+    comment: Comment
+  }
+
   extend type Query {
     getCommentsByOrder(id: ID!, paginate: Paginate!): Comments!
       @cacheControl(maxAge: 1000)
@@ -42,7 +47,7 @@ export default gql`
     _getComment(id: ID!): Comment!
   }
   extend type Mutation {
-    createComment(comment: InputComment!): Result!
+    createComment(comment: InputComment!): CommentRes!
     setVisibleComment(id: ID!): Result!
     deleteComment(id: ID!): Result!
     _addComment(comment: CreateComment!): Comment!

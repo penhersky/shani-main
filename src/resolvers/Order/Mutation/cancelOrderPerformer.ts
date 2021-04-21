@@ -18,7 +18,7 @@ const setOrderPerformer = async (_: any, { id }: any, context: Context) =>
       if (result) return result;
 
       if (
-        [orderStatuses.created, orderStatuses.closed].includes(
+        [orderStatuses.canceled, orderStatuses.closed].includes(
           String(order?.status),
         )
       )

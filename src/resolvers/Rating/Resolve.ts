@@ -15,6 +15,7 @@ export const average = async (query = {}) => {
   ]);
 
   const sum = await Rating.aggregate([
+    { $match: query },
     {
       $unwind: '$score',
     },
@@ -39,4 +40,4 @@ export const average = async (query = {}) => {
  *  Rating.findById(root[key]))
  */
 export default (key: string) => (root: any) =>
-  cather(async () => Rating.findOne({ user: root[key], order: root.id }));
+  cather(async () => Rating.findOne({ owner: root[key], order: root.id }));

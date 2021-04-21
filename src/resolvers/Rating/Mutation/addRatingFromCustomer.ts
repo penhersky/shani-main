@@ -17,13 +17,6 @@ const addRatingFromCustomer = async (
       const result = identity(user, order, userType.customer);
       if (result) return result;
 
-      const rating = await Rating.findOne({ order: order?.id, owner: user.id });
-      if (rating)
-        return {
-          result: 'ERROR',
-          status: 455,
-        };
-
       if (score > 5 || score < 1)
         return {
           result: 'ERROR',
@@ -39,6 +32,8 @@ const addRatingFromCustomer = async (
           result: 'ERROR',
           status: 401,
         };
+
+      await Rating.findOneAndDelete({ order: order?.id, owner: user.id });
 
       await Rating.create({
         owner: user.id,

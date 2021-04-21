@@ -9,15 +9,50 @@ import { sendOne } from '../../../io/wrappers';
 
 import { Context } from '../../../types/resolver';
 
-const setOrderStatus = (
-  status: string,
-  hu: string,
-  to: string,
-  event: string,
-) => async (_: any, { id }: any, context: Context) =>
+const getStatusSettings = (status: string) => {
+  switch (status) {
+    case 'created':
+      return {
+        hu: 'customer',
+        to: 'performer',
+        event: events.order.NEW,
+      };
+    case 'in processing':
+      return {
+        hu: 'performer',
+        to: 'customer',
+        event: events.order.in_processing,
+      };
+    case 'done':
+      return {
+        hu: 'performer',
+        to: 'customer',
+        event: events.order.done,
+      };
+    case 'closed':
+      return {
+        hu: 'customer',
+        to: 'performer',
+        event: events.order.closed,
+      };
+    case 'canceled':
+      return {
+        hu: 'customer',
+        to: 'performer',
+        event: events.order.canceled,
+      };
+
+    default:
+      throw Error('Set status Error');
+  }
+};
+
+export default async (_: any, { id, status }: any, context: Context) =>
   cather(
     async (user: any) => {
       const order: any = await Order.findById(id);
+
+      const { hu, to, event } = getStatusSettings(status);
 
       const result = identity(user, order, hu);
       if (result) return result;
@@ -51,28 +86,3 @@ const setOrderStatus = (
     context,
     auth,
   );
-
-export const setOrderStatusToInProcessing = setOrderStatus(
-  'in processing',
-  'performer',
-  'customer',
-  events.order.in_processing,
-);
-export const setOrderStatusToDone = setOrderStatus(
-  'done',
-  'performer',
-  'customer',
-  events.order.done,
-);
-export const setOrderStatusToClosed = setOrderStatus(
-  'closed',
-  'customer',
-  'performer',
-  events.order.closed,
-);
-export const setOrderStatusToCanceled = setOrderStatus(
-  'canceled',
-  'customer',
-  'performer',
-  events.order.canceled,
-);

@@ -37,8 +37,8 @@ const addComment = async (_: any, { comment }: any, context: any) =>
       );
 
       return {
-        status: 20,
         result: 'SUCCESS',
+        comment: newComment,
       };
     },
     context,

@@ -8,7 +8,7 @@ const getOrder = async (_: any, { id }: any, context: Context) =>
   cather(
     async () => {
       const order = await Order.findById(id);
-      if (!order)
+      if (!order || order.deleted)
         return {
           result: 'ERROR',
           status: 44,
